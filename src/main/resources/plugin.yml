@@ -1,0 +1,9 @@
+name: Gem
+version: ${project.version}
+main: com.mcatk.gem.Gem
+authors: [ soto ]
+commands:
+  gem:
+    description: main command
+  gems:
+    description: operate command
