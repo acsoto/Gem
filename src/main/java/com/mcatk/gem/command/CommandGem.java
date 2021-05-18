@@ -2,9 +2,12 @@ package com.mcatk.gem.command;
 
 import com.mcatk.gem.Gem;
 import com.mcatk.gem.Message;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class CommandGem implements CommandExecutor {
@@ -137,6 +140,7 @@ public class CommandGem implements CommandExecutor {
                 int gems = Gem.getPlugin().getGemExecutor().getGems(args[1]);
                 sender.sendMessage(Message.INFO + args[1] +
                         " 增加了 " + addGems + " 宝石, 现在有 " + gems + " 宝石");
+                Bukkit.getPlayer(args[1]).sendMessage("收到 " + addGems + " 宝石, 现在有 " + gems + " 宝石");
             } catch (NumberFormatException e) {
                 sender.sendMessage(Message.ERROR + "宝石必须是整数");
             }
