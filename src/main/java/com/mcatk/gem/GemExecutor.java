@@ -10,7 +10,6 @@ public class GemExecutor {
         try {
             Integer gems = MySQLManager.getInstance().getGems(name);
             if (gems == null) {
-                MySQLManager.getInstance().insertData(name);
                 return 0;
             }
             return gems;

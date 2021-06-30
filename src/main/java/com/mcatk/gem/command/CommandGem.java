@@ -18,7 +18,7 @@ public class CommandGem implements CommandExecutor {
         sender.sendMessage("/gem check <player>  查看宝石");
         sender.sendMessage("/gem add <player> <gems> 增加宝石");
         sender.sendMessage("/gem take <player> <gems> 减少宝石");
-        sender.sendMessage("/gem total <player> <gems> 累计宝石");
+        sender.sendMessage("/gem total <player> 累计宝石");
     }
     
     @Override
