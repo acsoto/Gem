@@ -3,26 +3,35 @@ package com.mcatk.gem.command;
 import com.mcatk.gem.Gem;
 import com.mcatk.gem.Message;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class CommandGem implements CommandExecutor {
     private CommandSender sender;
     private String[] args;
     
+    private void printHelp() {
+        sender.sendMessage("/gem set <player> <gems> 设置宝石");
+        sender.sendMessage("/gem delete <player> 删除全部数据");
+        sender.sendMessage("/gem check <player>  查看宝石");
+        sender.sendMessage("/gem add <player> <gems> 增加宝石");
+        sender.sendMessage("/gem take <player> <gems> 减少宝石");
+        sender.sendMessage("/gem total <player> <gems> 累计宝石");
+    }
+    
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         this.sender = sender;
         this.args = args;
-        if (args.length == 0) {
+        if (!sender.isOp()) {
             return false;
         }
-        String cmd = args[0].toLowerCase();
-        switch (cmd) {
+        if (args.length == 0) {
+            printHelp();
+        }
+        switch (args[0].toLowerCase()) {
             case "set":
                 new BukkitRunnable() {
                     @Override
