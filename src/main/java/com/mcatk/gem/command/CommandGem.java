@@ -11,7 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class CommandGem implements CommandExecutor {
     private CommandSender sender;
     private String[] args;
-    
+
     private void printHelp() {
         sender.sendMessage("/gem set <player> <gems> 设置宝石");
         sender.sendMessage("/gem delete <player> 删除全部数据");
@@ -20,7 +20,7 @@ public class CommandGem implements CommandExecutor {
         sender.sendMessage("/gem take <player> <gems> 减少宝石");
         sender.sendMessage("/gem total <player> 累计宝石");
     }
-    
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         this.sender = sender;
@@ -30,61 +30,32 @@ public class CommandGem implements CommandExecutor {
         }
         if (args.length == 0) {
             printHelp();
+            return true;
         }
         switch (args[0].toLowerCase()) {
             case "set":
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        set();
-                    }
-                }.runTaskAsynchronously(Gem.getPlugin());
+                set();
                 break;
             case "delete":
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        delete();
-                    }
-                }.runTaskAsynchronously(Gem.getPlugin());
+                delete();
                 break;
             case "check":
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        check();
-                    }
-                }.runTaskAsynchronously(Gem.getPlugin());
+                check();
                 break;
             case "add":
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        add();
-                    }
-                }.runTaskAsynchronously(Gem.getPlugin());
+                add();
                 break;
             case "take":
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        take();
-                    }
-                }.runTaskAsynchronously(Gem.getPlugin());
+                take();
                 break;
             case "total":
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        total();
-                    }
-                }.runTaskAsynchronously(Gem.getPlugin());
+                total();
                 break;
             default:
         }
         return true;
     }
-    
+
     private void set() {
         if (args.length != 3) {
             sendParameterError();
@@ -97,7 +68,7 @@ public class CommandGem implements CommandExecutor {
             }
         }
     }
-    
+
     private void delete() {
         if (args.length != 2) {
             sendParameterError();
@@ -106,7 +77,7 @@ public class CommandGem implements CommandExecutor {
             sender.sendMessage(Message.INFO + args[1] + " 宝石数据已清空");
         }
     }
-    
+
     private void check() {
         if (args.length != 2) {
             sendParameterError();
@@ -115,7 +86,7 @@ public class CommandGem implements CommandExecutor {
             sender.sendMessage(Message.INFO + args[1] + " 现在有 " + gems + " 宝石");
         }
     }
-    
+
     private void total() {
         if (args.length != 2) {
             sendParameterError();
@@ -124,7 +95,7 @@ public class CommandGem implements CommandExecutor {
             sender.sendMessage(Message.INFO + args[1] + " 累计 " + gems + " 宝石");
         }
     }
-    
+
     private void take() {
         if (args.length != 3) {
             sendParameterError();
@@ -138,7 +109,7 @@ public class CommandGem implements CommandExecutor {
             }
         }
     }
-    
+
     private void add() {
         if (args.length != 3) {
             sendParameterError();
@@ -155,11 +126,11 @@ public class CommandGem implements CommandExecutor {
             }
         }
     }
-    
+
     private void sendParameterError() {
         sender.sendMessage(Message.ERROR + "参数长度有误");
     }
-    
+
 }
 
 
