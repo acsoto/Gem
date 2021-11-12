@@ -8,6 +8,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public final class Gem extends JavaPlugin {
     
     private static Gem plugin;
@@ -54,9 +57,11 @@ public final class Gem extends JavaPlugin {
         MySQLManager.getInstance().shutdown();
     }
     
-    public static void log(String s) {
-        Gem.getPlugin().getLogger().info(s);
-        Gem.getPlugin().fileLog.log(s);
+    public void log(String s) {
+        String log = new SimpleDateFormat("[yyyy-MM-dd hh:mm:ss]").format(new Date())
+                + s;
+        Gem.getPlugin().getLogger().info(log);
+        Gem.getPlugin().fileLog.log(log);
     }
     
 }

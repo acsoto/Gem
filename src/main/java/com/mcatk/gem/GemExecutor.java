@@ -25,7 +25,7 @@ public class GemExecutor {
                 MySQLManager.getInstance().insertData(name);
             }
             MySQLManager.getInstance().setGems(name, gems);
-            Gem.log(name + "宝石设置为" + gems);
+            Gem.getPlugin().log(name + "宝石设置为" + gems);
         } catch (SQLException e) {
             e.printStackTrace();
             Gem.getPlugin().getLogger().warning("SQL错误");
@@ -35,7 +35,7 @@ public class GemExecutor {
     public void deleteGems(String name) {
         try {
             MySQLManager.getInstance().deleteData(name);
-            Gem.log(name + "数据删除");
+            Gem.getPlugin().log(name + "数据删除");
         } catch (SQLException e) {
             e.printStackTrace();
             Gem.getPlugin().getLogger().warning("SQL错误");
@@ -49,7 +49,7 @@ public class GemExecutor {
                 return false;
             } else {
                 MySQLManager.getInstance().setGems(name, currentGems - gems);
-                Gem.log(name + "花费宝石" + gems);
+                Gem.getPlugin().log(name + "花费宝石" + gems);
                 return true;
             }
         } catch (SQLException e) {
@@ -85,7 +85,7 @@ public class GemExecutor {
             total += addGems;
             MySQLManager.getInstance().setGems(name, gems);
             MySQLManager.getInstance().setTotal(name, total);
-            Gem.log(name + "获得宝石" + addGems);
+            Gem.getPlugin().log(name + "获得宝石" + addGems);
         } catch (SQLException e) {
             e.printStackTrace();
             Gem.getPlugin().getLogger().info("SQL异常");
