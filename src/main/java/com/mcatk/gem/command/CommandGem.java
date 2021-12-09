@@ -26,7 +26,14 @@ public class CommandGem implements CommandExecutor {
         this.sender = sender;
         this.args = args;
         if (!sender.isOp()) {
-            return false;
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    int gems = Gem.getPlugin().getGemExecutor().getGems(sender.getName());
+                    sender.sendMessage(Message.INFO + "你的宝石：" + gems);
+                }
+            }.runTaskAsynchronously(Gem.getPlugin());
+            return true;
         }
         if (args.length == 0) {
             printHelp();
