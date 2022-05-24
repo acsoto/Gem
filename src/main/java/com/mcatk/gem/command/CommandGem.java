@@ -109,8 +109,11 @@ public class CommandGem implements CommandExecutor {
         } else {
             try {
                 int gems = Integer.parseInt(args[2]);
-                Gem.getPlugin().getGemExecutor().takeGems(args[1], gems);
-                sender.sendMessage(Message.INFO + args[1] + " 减少 " + gems + " 宝石");
+                if (Gem.getPlugin().getGemExecutor().takeGems(args[1], gems)) {
+                    sender.sendMessage(Message.INFO + args[1] + " 减少 " + gems + " 宝石");
+                } else {
+                    sender.sendMessage(Message.ERROR + args[1] + " 宝石不足");
+                }
             } catch (NumberFormatException e) {
                 sender.sendMessage(Message.ERROR + "宝石必须是整数");
             }
@@ -127,7 +130,7 @@ public class CommandGem implements CommandExecutor {
                 int gems = Gem.getPlugin().getGemExecutor().getGems(args[1]);
                 sender.sendMessage(Message.INFO + args[1] +
                         " 增加了 " + addGems + " 宝石, 现在有 " + gems + " 宝石");
-                if(Bukkit.getPlayer(args[1])!=null){
+                if (Bukkit.getPlayer(args[1]) != null) {
                     Bukkit.getPlayer(args[1]).sendMessage("收到 " + addGems + " 宝石, 现在有 " + gems + " 宝石");
                 }
             } catch (NumberFormatException e) {
