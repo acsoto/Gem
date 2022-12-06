@@ -49,7 +49,7 @@ public class MySQLManager {
     private void connectMySQL() {
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://" + ip + ":" + port + "/" + databaseName + "?autoReconnect=true",
+                    "jdbc:mysql://" + ip + ":" + port + "/" + databaseName + "?autoReconnect=true&useSSL=false",
                     userName, userPassword
             );
         } catch (SQLException e) {
