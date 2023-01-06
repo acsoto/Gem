@@ -2,7 +2,7 @@ package com.mcatk.gem.sql;
 
 public enum SQLCommand {
     CREATE_TABLE(
-            "CREATE TABLE IF NOT EXISTS `GEM` (" +
+            "CREATE TABLE IF NOT EXISTS `gem` (" +
                     "`id` MEDIUMINT UNSIGNED AUTO_INCREMENT," +
                     "`username` VARCHAR(128) NOT NULL," +
                     "`gems` INT NOT NULL DEFAULT 0," +
@@ -11,21 +11,21 @@ public enum SQLCommand {
                     "PRIMARY KEY (`id`))"
     ),
     INSERT_DATA(
-            "INSERT INTO `GEM` " +
+            "INSERT INTO `gem` " +
                     "(`username`)" +
                     "VALUES (?)"
     ),
     DELETE_DATA(
-            "DELETE FROM `GEM` WHERE `username` = ?"
+            "DELETE FROM `gem` WHERE `username` = ?"
     ),
     SELECT_DATA(
-            "SELECT * FROM `GEM` WHERE `username` = ?"
+            "SELECT * FROM `gem` WHERE `username` = ?"
     ),
     UPDATE_GEMS(
-            "UPDATE `GEM` SET `gems` = ? WHERE `username` = ?"
+            "UPDATE `gem` SET `gems` = ? WHERE `username` = ?"
     ),
     UPDATE_TOTAL(
-            "UPDATE `GEM` SET `total` = ? WHERE `username` = ?"
+            "UPDATE `gem` SET `total` = ? WHERE `username` = ?"
     );
     
     /*
