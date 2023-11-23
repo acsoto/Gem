@@ -43,9 +43,6 @@ public class CommandGem implements CommandExecutor {
             case "set":
                 set();
                 break;
-            case "delete":
-                delete();
-                break;
             case "check":
                 check();
                 break;
@@ -73,15 +70,6 @@ public class CommandGem implements CommandExecutor {
             } catch (NumberFormatException e) {
                 sender.sendMessage(Message.ERROR + "宝石必须是整数");
             }
-        }
-    }
-
-    private void delete() {
-        if (args.length != 2) {
-            sendParameterError();
-        } else {
-            Gem.getPlugin().getGemExecutor().deleteGems(args[1]);
-            sender.sendMessage(Message.INFO + args[1] + " 宝石数据已清空");
         }
     }
 

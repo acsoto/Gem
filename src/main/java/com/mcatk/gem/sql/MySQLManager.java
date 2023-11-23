@@ -16,11 +16,11 @@ public class MySQLManager {
     private Connection connection;
     private int port;
     private static MySQLManager instance = null;
-    
+
     public static MySQLManager getInstance() {
         return instance == null ? instance = new MySQLManager() : instance;
     }
-    
+
     public void enableMySQL() {
         ip = Gem.getPlugin().getConfig().getString("mysql.ip");
         databaseName = Gem.getPlugin().getConfig().getString("mysql.databasename");
@@ -28,15 +28,8 @@ public class MySQLManager {
         userPassword = Gem.getPlugin().getConfig().getString("mysql.password");
         port = Gem.getPlugin().getConfig().getInt("mysql.port");
         connectMySQL();
-        String cmd = SQLCommand.CREATE_TABLE.commandToString();
-        try {
-            PreparedStatement ps = connection.prepareStatement(cmd);
-            doCommand(ps);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
-    
+
     public void shutdown() {
         try {
             connection.close();
@@ -45,7 +38,7 @@ public class MySQLManager {
             e.printStackTrace();
         }
     }
-    
+
     private void connectMySQL() {
         try {
             connection = DriverManager.getConnection(
@@ -56,71 +49,72 @@ public class MySQLManager {
             e.printStackTrace();
         }
     }
-    
-    public void doCommand(PreparedStatement ps) {
-        try {
+
+    public void insertData(String name) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                "INSERT INTO `gem` " +
+                        "(`username`)" +
+                        "VALUES (?)"
+        )) {
+            ps.setString(1, name);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public void insertData(String name) throws SQLException {
-        PreparedStatement ps;
-        String s = SQLCommand.INSERT_DATA.commandToString();
-        ps = connection.prepareStatement(s);
-        ps.setString(1, name);
-        doCommand(ps);
+
+    public Integer getGems(String name) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                "SELECT * FROM `gem` WHERE `username` = ?"
+        )) {
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("gems");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-    
-    public void deleteData(String name) throws SQLException {
-        PreparedStatement ps;
-        String s = SQLCommand.DELETE_DATA.commandToString();
-        ps = connection.prepareStatement(s);
-        ps.setString(1, name);
-        doCommand(ps);
+
+    public Integer getTotal(String name) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                "SELECT * FROM `gem` WHERE `username` = ?"
+        )) {
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-    
-    public Integer getGems(String name) throws SQLException {
-        String s = SQLCommand.SELECT_DATA.commandToString();
-        PreparedStatement ps = connection.prepareStatement(s);
-        ps.setString(1, name);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return rs.getInt("gems");
-        } else {
-            return null;
+
+    public void setGems(String name, int num) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                "UPDATE `gem` SET `gems` = ? WHERE `username` = ?"
+        )) {
+            ps.setString(2, name);
+            ps.setInt(1, num);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
-    
-    public Integer getTotal(String name) throws SQLException {
-        String s = SQLCommand.SELECT_DATA.commandToString();
-        PreparedStatement ps = connection.prepareStatement(s);
-        ps.setString(1, name);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return rs.getInt("total");
-        } else {
-            return null;
+
+    public void setTotal(String name, int num) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                "UPDATE `gem` SET `total` = ? WHERE `username` = ?"
+        )) {
+            ps.setString(2, name);
+            ps.setInt(1, num);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
-    
-    public void setGems(String name, int num) throws SQLException {
-        PreparedStatement ps;
-        String s = SQLCommand.UPDATE_GEMS.commandToString();
-        ps = connection.prepareStatement(s);
-        ps.setString(2, name);
-        ps.setInt(1, num);
-        doCommand(ps);
-    }
-    
-    public void setTotal(String name, int num) throws SQLException {
-        PreparedStatement ps;
-        String s = SQLCommand.UPDATE_TOTAL.commandToString();
-        ps = connection.prepareStatement(s);
-        ps.setString(2, name);
-        ps.setInt(1, num);
-        doCommand(ps);
-    }
-    
+
 }
